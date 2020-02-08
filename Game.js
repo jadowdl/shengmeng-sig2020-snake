@@ -2,45 +2,24 @@ import React from 'react';
 import { Text, View } from 'react-native';
 import { Button } from 'react-native-material-ui';
 import { Dimensions } from 'react-native'
+import {GRID_WIDTH, GRID_HEIGHT, Model } from './Model';
 
 import Box from './Box';
 
-const GRID_WIDTH = 4;
-const GRID_HEIGHT = 4;
-
 export default class Game extends React.Component {
-  makeInitialBoard = () => {
-    var rows = [];
-    for(var row = 0; row < GRID_HEIGHT; row += 1) {
-      var cols = [];
-      for(var col = 0; col < GRID_WIDTH; col += 1) {
-        cols.push(false);
-      }
-      rows.push(cols);
-    }
-    
-    return rows;
+  
+  state = {
+    board: new Model()
   };
 
   doClick = (row, col) => {
-    // hack for wrap around.
-    row += GRID_HEIGHT;
-    col += GRID_WIDTH;
-
-    const board = this.state.board;
-    const offsets = [[0,0], [0, 1], [0, -1], [1, 0], [-1, 0]];
-    for (var i = 0; i < offsets.length; i+=1) {
-      var x = offsets[i][0];
-      var y = offsets[i][1];
-      board[(row+x)%GRID_HEIGHT][(col+y)%GRID_WIDTH] = 
-          !board[(row+x)%GRID_HEIGHT][(col+y)%GRID_WIDTH];
-    }
-    this.setState({...this.state, board});
+    const newModel = new Model(this.state.board.serialize());
+    newModel.handleClickAt(row, col);
+    this.setState({
+        ...this.state,
+        board: newModel
+    });
   }
-
-  state = {
-    board: this.makeInitialBoard()
-  };
 
   // componentDidMount() {
   //   for(var i = 0; i < GRID_WIDTH * GRID_HEIGHT; i+= 1) {
@@ -68,7 +47,7 @@ export default class Game extends React.Component {
          cols.push(
              <Box width={width/GRID_WIDTH}
                   height={height/GRID_HEIGHT}
-                  color={this.state.board[row][col] ? "#ff0000" : "#00ff00"}
+                  color={this.state.board.at(row, col) ? "#ff0000" : "#00ff00"}
                   row={row}
                   col={col}
                   clickHandler={this.doClick}/>
