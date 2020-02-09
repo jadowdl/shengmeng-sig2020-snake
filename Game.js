@@ -5,12 +5,22 @@ import { Dimensions } from 'react-native'
 import {GRID_WIDTH, GRID_HEIGHT, Model } from './Model';
 
 import Box from './Box';
+import Interface from './Interface';
 
 export default class Game extends React.Component {
   
   state = {
-    board: new Model()
+    board: new Model(),
+    iface: new Interface(this)
   };
+
+  newBoardState = (data) => {
+    console.log("nBS");
+    this.setState({
+        ...this.state,
+        board: new Model(data)
+    });
+  }
 
   doClick = (row, col) => {
     const newModel = new Model(this.state.board.serialize());
