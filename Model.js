@@ -36,10 +36,11 @@ class Model {
       const board = this.rows;
       const offsets = [[0,0], [0, 1], [0, -1], [1, 0], [-1, 0]];
       for (var i = 0; i < offsets.length; i+=1) {
-        var x = offsets[i][0];
-        var y = offsets[i][1];
-        board[(row+x)%GRID_HEIGHT][(col+y)%GRID_WIDTH] = 
-            !board[(row+x)%GRID_HEIGHT][(col+y)%GRID_WIDTH];
+        const x = offsets[i][0];
+        const y = offsets[i][1];
+        const r_index = (row+x)%GRID_HEIGHT;
+        const c_index = (col+y)%GRID_WIDTH;
+        this.rows[r_index][c_index] = !this.rows[r_index][c_index];
       }
     }
 

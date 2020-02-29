@@ -12,4 +12,12 @@ app.get("/board", (req, resp) => {
     resp.send(m.serialize());
 });
 
+app.get("/click", (req, resp) => {
+    const x = parseInt(req.query.x);
+    const y = parseInt(req.query.y);
+    m.handleClickAt(y, x);
+    console.log("Click @ ", x, y);
+    resp.send("OK");
+});
+
 app.listen(3000);
