@@ -23,12 +23,16 @@ export default class Game extends React.Component {
   }
 
   doClick = (row, col) => {
-    const newModel = new Model(this.state.board.serialize());
-    newModel.handleClickAt(row, col);
-    this.setState({
-        ...this.state,
-        board: newModel
-    });
+    // Play game via server...
+    this.state.iface.sendClickToServer(row, col);
+
+    // Old code to play game locally, offline.
+    // const newModel = new Model(this.state.board.serialize());
+    // newModel.handleClickAt(row, col);
+    // this.setState({
+    //     ...this.state,
+    //     board: newModel
+    // });
   }
 
   // componentDidMount() {
