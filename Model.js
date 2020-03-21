@@ -1,5 +1,5 @@
-const GRID_WIDTH = 10;
-const GRID_HEIGHT = 10;
+const GRID_WIDTH = 50;
+const GRID_HEIGHT = 50;
 
 const EMPTY_TYPE = 0;
 const SNAKE_TYPE = 1;

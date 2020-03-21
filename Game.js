@@ -8,7 +8,7 @@ import Box from './Box';
 import Interface from './Interface';
 
 export default class Game extends React.Component {
-  
+
   state = {
     board: new Model(),
     iface: new Interface(this)
@@ -43,40 +43,40 @@ export default class Game extends React.Component {
   //   }
   // }
 
-  render() {	
+  render() {
     // Determine the size (in pixels) of a single Box.
     var {width, height} = Dimensions.get('window')
-    width -= 100;
-    height -= 100;
+    width -= 50;
+    height -= 50;
     width = Math.min(width, height);
     height = width;
- 
+
     // Create a grid of Box components, one row at a time.
     var rows = [];
     for(var row = 0; row < GRID_HEIGHT; row += 1) {
 
       // For each row, we define each cell per column individually.
       var cols = [];
-      for(var col = 0; col < GRID_WIDTH; col += 1) {      
+      for(var col = 0; col < GRID_WIDTH; col += 1) {
          cols.push(
              <Box width={width/GRID_WIDTH}
                   height={height/GRID_HEIGHT}
-                  color={this.state.board.at(row, col) ? "#ff0000" : "#00ff00"}
+                  color={this.state.board.at(row, col) ? "#663300" : "#e600e6"}
                   row={row}
                   col={col}
                   clickHandler={this.doClick}/>
          );
       }
-      
 
-      // Now we add the whole row as a single View component. 
+
+      // Now we add the whole row as a single View component.
       rows.push(
           <View style={{flexDirection:'row', alignItems:'center', justifyContent:'center'}}>
               {cols}
           </View>
       );
     }
-    
+
     // If you need to add text in the return'd value, here's an example:
     //    <Text style={{color:"#ff00ff"}}> Changed the text here </Text>
 
