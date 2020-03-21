@@ -10,8 +10,8 @@ class Model {
     snake = [];   // example: [[1,1], [2,1], [2,2]]
 
     xDirection = 1;
-
     yDirection = 0;
+
     // "Derived Data"
     rows = [];
 
@@ -78,6 +78,11 @@ class Model {
     serialize() {
         // UNDOES THIS: this.snake = JSON.parse(str);
         return JSON.stringify(this.snake);
+    }
+    movesnake(){
+      this.snake.pop()
+      this.snake.unshift([(this.snake[0][0]+this.xDirection)%GRID_HEIGHT,(this.snake[0][1]+this.yDirection)%GRID_WIDTH]);
+      this.deriveRows();
     }
 }
 
