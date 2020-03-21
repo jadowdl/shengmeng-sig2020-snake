@@ -4,6 +4,15 @@ const app = express();
 const {Model} = require('./Model');
 const m = new Model();
 
+function funct() {
+  m.movesnake();
+  
+  setTimeout(funct, 500);
+}
+
+setTimeout(funct, 500);
+
+
 app.get("/hi", (req, resp) => {
     resp.send("Pigs fly Class");
 });
