@@ -9,6 +9,9 @@ class Model {
     // "Source of Truth"
     snake = [];   // example: [[1,1], [2,1], [2,2]]
 
+    xDirection = 1;
+
+    yDirection = 0;
     // "Derived Data"
     rows = [];
 
