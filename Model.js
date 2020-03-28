@@ -85,6 +85,22 @@ class Model {
       this.snake.pop()
       this.snake.unshift([(this.snake[0][0]+this.xDirection)%GRID_HEIGHT,(this.snake[0][1]+this.yDirection)%GRID_WIDTH]);
       this.deriveRows();
+      checkGameOver();
+    }
+
+    checkGameOver() {
+      newHead = snake[0];
+      // newHead[0] = newHead[0] + xDirection;
+      // newHead[1] = newHead[1] + yDirection;
+      for (let i = 1; i < snake.length; i++){
+        if (newHead[0] == snake[i][0]){
+          if (newHead[1] == snake[i][1]){
+            gameOver = true;
+            return;
+          }
+        }
+      }
+      return;
     }
 }
 
