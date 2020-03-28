@@ -6,6 +6,8 @@ const SNAKE_TYPE = 1;
 
 class Model {
 
+    gameOver = false;
+
     // "Source of Truth"
     snake = [];   // example: [[1,1], [2,1], [2,2]]
 
