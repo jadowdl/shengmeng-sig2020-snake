@@ -18,7 +18,7 @@ export default class Interface {
 
     sendClickToServer(row, col) {
         // Fire and forget - wait on pulse to actually pick up the change.
-        fetch(SERVER_URL + CLICK_SUFFIX + "?x=" + col + "&y=" + row);
+        fetch(SERVER_URL + CLICK_SUFFIX + "?x=" + col + "&y=" + row); 
     }
 
     getFromServer() {

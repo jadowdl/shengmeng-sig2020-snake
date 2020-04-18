@@ -49,7 +49,7 @@ class Model {
     }
 
     initializeForGameStart() {
-      this.snake = [[5, 5], [5, 6]];
+      this.snake = [[24, 24], [24, 25]];
       this.deriveRows();
     }
 
@@ -103,7 +103,10 @@ class Model {
       return;
     }
 }
-
+function getClickPosition(e) {
+  var xPosition = e.clientX;
+  var yPosition = e.clientY;
+}
 
 exports.GRID_WIDTH = GRID_WIDTH;
 exports.GRID_HEIGHT = GRID_HEIGHT;
