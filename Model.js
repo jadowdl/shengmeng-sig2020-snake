@@ -56,26 +56,29 @@ class Model {
     at(row, col) {
         return this.rows[row][col];
     }
-
+// row is y value of click
     handleClickAt(row, col) {
+      if(this.xDirection==0){
+        if(col>this.snake[0][1]){
+          this.yDirection=0;
+          this.xDirection=1;
+        }else if(col<this.snake[0][1]){
+          this.yDirection = 0;
+          this.xdirection = -1;
+        }
+      }else{
+        if(row>this.snake[0][0]){
+          this.xDirection = 0;
+          this.yDirection = 1;
+        }else if(row<this.snake[0][0]){
+          this.xDirection = 0;
+          this.yDirection = -1;
+        }
+      }
 
-      // This was for Lights Out.
-      // Doesn't make sense for snake currently.
-
-      // hack for wrap around.
-      /*
-      row += GRID_HEIGHT;
-      col += GRID_WIDTH;
-      const board = this.rows;
-      const offsets = [[0,0], [0, 1], [0, -1], [1, 0], [-1, 0]];
-      for (var i = 0; i < offsets.length; i+=1) {
-        const x = offsets[i][0];
-        const y = offsets[i][1];
-        const r_index = (row+x)%GRID_HEIGHT;
-        const c_index = (col+y)%GRID_WIDTH;
-        this.rows[r_index][c_index] = !this.rows[r_index][c_index];
-      }*/
     }
+
+
 
     serialize() {
         // UNDOES THIS: this.snake = JSON.parse(str);
@@ -83,13 +86,14 @@ class Model {
     }
     movesnake(){
       this.snake.pop()
-      this.snake.unshift([(this.snake[0][0]+this.xDirection)%GRID_HEIGHT,(this.snake[0][1]+this.yDirection)%GRID_WIDTH]);
+      this.snake.unshift([(this.snake[0][0]+this.yDirection)%GRID_HEIGHT,(this.snake[0][1]+this.xDirection)%GRID_WIDTH]);
       this.deriveRows();
-      checkGameOver();
+      this.checkGameOver();
     }
 
     checkGameOver() {
-      newHead = snake[0];
+      var snake = this.snake;
+      var newHead = snake[0];
       // newHead[0] = newHead[0] + xDirection;
       // newHead[1] = newHead[1] + yDirection;
       for (let i = 1; i < snake.length; i++){
@@ -103,10 +107,7 @@ class Model {
       return;
     }
 }
-function getClickPosition(e) {
-  var xPosition = e.clientX;
-  var yPosition = e.clientY;
-}
+
 
 exports.GRID_WIDTH = GRID_WIDTH;
 exports.GRID_HEIGHT = GRID_HEIGHT;
