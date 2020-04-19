@@ -6,11 +6,15 @@ const m = new Model();
 
 function funct() {
   m.movesnake();
-  
-  setTimeout(funct, 500);
+  setTimeout(funct, 30);
 }
+setTimeout(funct, 30);
 
-setTimeout(funct, 500);
+function grow() {
+  m.growSnake = true;
+  setTimeout(grow, 2000);
+}
+setTimeout(grow, 2000);
 
 
 app.get("/hi", (req, resp) => {

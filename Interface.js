@@ -6,27 +6,34 @@ const BOARD_SUFFIX = "board";
 const CLICK_SUFFIX = "click";
 
 export default class Interface {
-    pulse = () => {
+    pulse() {
+        if (!this.doPulse) {
+          return;
+        }
         this.getFromServer();
-        setTimeout(this.pulse, PULSE_TIME);
-    };
+        setTimeout(()=>this.pulse(), PULSE_TIME);
+    }
 
     constructor(game) {
+        this.doPulse = true;
         this.game = game;
         this.pulse();
     }
 
+    stopPulsing() {
+        this.doPulse = false;
+    }
+
     sendClickToServer(row, col) {
         // Fire and forget - wait on pulse to actually pick up the change.
-        fetch(SERVER_URL + CLICK_SUFFIX + "?x=" + col + "&y=" + row); 
+        fetch(SERVER_URL + CLICK_SUFFIX + "?x=" + col + "&y=" + row);
     }
 
     getFromServer() {
         fetch(SERVER_URL + BOARD_SUFFIX)
             .then(response => response.text())
             .then(data => {
-            console.log(data);
-            this.game.newBoardState(data);
-        });
+                this.game.newBoardState(data);
+            });
     }
 }

@@ -14,6 +14,8 @@ class Model {
     xDirection = 1;
     yDirection = 0;
 
+    growSnake = false;
+
     // "Derived Data"
     rows = [];
 
@@ -59,18 +61,18 @@ class Model {
 // row is y value of click
     handleClickAt(row, col) {
       if(this.xDirection==0){
-        if(col>this.snake[0][1]){
-          this.yDirection=0;
-          this.xDirection=1;
-        }else if(col<this.snake[0][1]){
+        if(col>=this.snake[0][1]){
           this.yDirection = 0;
-          this.xdirection = -1;
+          this.xDirection = 1;
+        } else {
+          this.yDirection = 0;
+          this.xDirection = -1;
         }
-      }else{
-        if(row>this.snake[0][0]){
+      } else{
+        if (row>=this.snake[0][0]){
           this.xDirection = 0;
           this.yDirection = 1;
-        }else if(row<this.snake[0][0]){
+        } else {
           this.xDirection = 0;
           this.yDirection = -1;
         }
@@ -84,9 +86,19 @@ class Model {
         // UNDOES THIS: this.snake = JSON.parse(str);
         return JSON.stringify(this.snake);
     }
+
     movesnake(){
-      this.snake.pop()
-      this.snake.unshift([(this.snake[0][0]+this.yDirection)%GRID_HEIGHT,(this.snake[0][1]+this.xDirection)%GRID_WIDTH]);
+      if (this.gameOver) {
+        return;
+      }
+
+      if (!this.growSnake) {
+        this.snake.pop()
+      }
+      this.growSnake = false;
+
+      this.snake.unshift([(GRID_HEIGHT + this.snake[0][0] + this.yDirection)%GRID_HEIGHT,
+                          (GRID_WIDTH  + this.snake[0][1] + this.xDirection)%GRID_WIDTH]);
       this.deriveRows();
       this.checkGameOver();
     }
@@ -99,7 +111,7 @@ class Model {
       for (let i = 1; i < snake.length; i++){
         if (newHead[0] == snake[i][0]){
           if (newHead[1] == snake[i][1]){
-            gameOver = true;
+            this.gameOver = true;
             return;
           }
         }

@@ -11,17 +11,24 @@ export default class Game extends React.Component {
 
   state = {
     board: new Model(),
-    iface: new Interface(this)
+    iface: new Interface(this),
+    serverState: null
   };
 
   newBoardState = (data) => {
-    console.log("nBS");
+    console.log("-> nBS", new Date().getTime());
     this.setState({
         ...this.state,
-        board: new Model(data)
+        board: new Model(data),
+        serverState: data
     });
+    console.log("<- nBS", new Date().getTime());
   }
 
+  shouldComponentUpdate(nextProps, nextState) {
+    return nextState.serverState !== this.state.serverState;
+  }
+  
   doClick = (row, col) => {
     // Play game via server...
     this.state.iface.sendClickToServer(row, col);
@@ -44,6 +51,8 @@ export default class Game extends React.Component {
   // }
 
   render() {
+    console.log("-> render", new Date().getTime());
+
     // Determine the size (in pixels) of a single Box.
     var {width, height} = Dimensions.get('window')
     width -= 50;
@@ -79,6 +88,8 @@ export default class Game extends React.Component {
 
     // If you need to add text in the return'd value, here's an example:
     //    <Text style={{color:"#ff00ff"}}> Changed the text here </Text>
+
+    console.log("<- render", new Date().getTime());
 
     // Finally, we return the JSX that renders the whole board
     return (
