@@ -1,7 +1,7 @@
 import React from 'react';
 import { TouchableOpacity, View } from 'react-native';
 
-export default class Box extends React.Component {
+export default class Box extends React.PureComponent {
   render() {
     const { width, height, color, row, col, clickHandler} = this.props;
 
