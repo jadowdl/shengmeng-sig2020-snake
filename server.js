@@ -7,10 +7,10 @@ const m = new Model();
 function funct() {
   m.movesnake();
   
-  setTimeout(funct, 500);
+  setTimeout(funct, 100);
 }
 
-setTimeout(funct, 500);
+setTimeout(funct, 100);
 
 
 app.get("/hi", (req, resp) => {

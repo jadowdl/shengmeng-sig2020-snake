@@ -64,7 +64,7 @@ class Model {
           this.xDirection=1;
         }else if(col<this.snake[0][1]){
           this.yDirection = 0;
-          this.xdirection = -1;
+          this.xDirection = -1;
         }
       }else{
         if(row>this.snake[0][0]){
@@ -99,7 +99,7 @@ class Model {
       for (let i = 1; i < snake.length; i++){
         if (newHead[0] == snake[i][0]){
           if (newHead[1] == snake[i][1]){
-            gameOver = true;
+            this.gameOver = true;
             return;
           }
         }
