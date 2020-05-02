@@ -85,8 +85,12 @@ class Model {
         return JSON.stringify(this.snake);
     }
     movesnake(){
+      if (this.gameOver == true){
+        return;
+      }
       this.snake.pop()
-      this.snake.unshift([(this.snake[0][0]+this.yDirection)%GRID_HEIGHT,(this.snake[0][1]+this.xDirection)%GRID_WIDTH]);
+      this.snake.unshift([(GRID_HEIGHT+this.snake[0][0]+this.yDirection)%GRID_HEIGHT,
+                          (GRID_WIDTH +this.snake[0][1]+this.xDirection)%GRID_WIDTH]);
       this.deriveRows();
       this.checkGameOver();
     }
