@@ -3,6 +3,7 @@ const GRID_HEIGHT = 50;
 
 const EMPTY_TYPE = 0;
 const SNAKE_TYPE = 1;
+const APPLE_TYPE = 2;
 
 class Model {
 
@@ -21,7 +22,9 @@ class Model {
 
     constructor(str) {
         if (str) {
-            this.snake = JSON.parse(str);
+            const parse = JSON.parse(str);
+            this.snake = parse.snake;
+            this.appleCoords = parse.appleCoords;
             this.deriveRows();
         } else {
             this.initializeForGameStart();
@@ -48,10 +51,16 @@ class Model {
          const columns = this.rows[row];
          columns[col] = SNAKE_TYPE;
       }
+
+      console.log(this.appleCoords);
+      const [arow,acol] = this.appleCoords;
+      const acolumns = this.rows[arow];
+      acolumns[acol] = APPLE_TYPE;
     }
 
     initializeForGameStart() {
       this.snake = [[24, 24], [24, 25]];
+      this.appleCoords = [24,30];
       this.deriveRows();
     }
 
@@ -84,7 +93,10 @@ class Model {
 
     serialize() {
         // UNDOES THIS: this.snake = JSON.parse(str);
-        return JSON.stringify(this.snake);
+        return JSON.stringify({
+          snake: this.snake,
+          appleCoords: this.appleCoords
+        });
     }
     movesnake(){
       if (this.gameOver == true){
@@ -124,4 +136,7 @@ class Model {
 
 exports.GRID_WIDTH = GRID_WIDTH;
 exports.GRID_HEIGHT = GRID_HEIGHT;
+exports.EMPTY_TYPE = EMPTY_TYPE;
+exports.SNAKE_TYPE = SNAKE_TYPE;
+exports.APPLE_TYPE = APPLE_TYPE;
 exports.Model = Model;
