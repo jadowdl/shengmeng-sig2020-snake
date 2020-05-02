@@ -2,7 +2,7 @@ import React from 'react';
 import { Text, View } from 'react-native';
 import { Button } from 'react-native-material-ui';
 import { Dimensions } from 'react-native'
-import {GRID_WIDTH, GRID_HEIGHT, Model } from './Model';
+import {GRID_WIDTH, GRID_HEIGHT, SNAKE_TYPE, APPLE_TYPE, EMPTY_TYPE, Model } from './Model';
 
 import Box from './Box';
 import Interface from './Interface';
@@ -42,7 +42,15 @@ export default class Game extends React.Component {
   //     // this.doClick(i, j);
   //   }
   // }
-
+  getColorFor(type) {
+     if (type == EMPTY_TYPE) {
+       return "#663300";     }
+     else if (type == SNAKE_TYPE) {
+       return "#e600e6";     }
+       else if (type == APPLE_TYPE){
+         return "#000000";
+       }
+      }
   render() {
     // Determine the size (in pixels) of a single Box.
     var {width, height} = Dimensions.get('window')
@@ -61,7 +69,7 @@ export default class Game extends React.Component {
          cols.push(
              <Box width={width/GRID_WIDTH}
                   height={height/GRID_HEIGHT}
-                  color={this.state.board.at(row, col) ? "#663300" : "#e600e6"}
+                  color={this.getColorFor(this.state.board.at(row, col))}
                   row={row}
                   col={col}
                   clickHandler={this.doClick}/>
