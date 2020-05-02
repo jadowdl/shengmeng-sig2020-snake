@@ -22,7 +22,9 @@ class Model {
 
     constructor(str) {
         if (str) {
-            this.snake = JSON.parse(str);
+            const parse = JSON.parse(str);
+            this.snake = parse.snake;
+            this.appleCoords = parse.appleCoords;
             this.deriveRows();
         } else {
             this.initializeForGameStart();
@@ -50,6 +52,7 @@ class Model {
          columns[col] = SNAKE_TYPE;
       }
 
+      console.log(this.appleCoords);
       const [arow,acol] = this.appleCoords;
       const acolumns = this.rows[arow];
       acolumns[acol] = APPLE_TYPE;
@@ -90,7 +93,10 @@ class Model {
 
     serialize() {
         // UNDOES THIS: this.snake = JSON.parse(str);
-        return JSON.stringify(this.snake);
+        return JSON.stringify({
+          snake: this.snake,
+          appleCoords: this.appleCoords
+        });
     }
     movesnake(){
       if (this.gameOver == true){
