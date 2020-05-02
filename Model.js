@@ -14,7 +14,7 @@ class Model {
     snakeLength = 2;
     xDirection = 1;
     yDirection = 0;
-    
+
     appleCoords = [];
 
     // "Derived Data"
@@ -52,15 +52,21 @@ class Model {
          columns[col] = SNAKE_TYPE;
       }
 
-      console.log(this.appleCoords);
       const [arow,acol] = this.appleCoords;
       const acolumns = this.rows[arow];
       acolumns[acol] = APPLE_TYPE;
     }
 
+    randomlyMoveApple() {
+      const row = parseInt(Math.random() * GRID_HEIGHT);
+      const col = parseInt(Math.random() * GRID_WIDTH);
+
+      this.appleCoords = [row,col];
+
+    }
     initializeForGameStart() {
       this.snake = [[24, 24], [24, 25]];
-      this.appleCoords = [24,30];
+      this.randomlyMoveApple();
       this.deriveRows();
     }
 
@@ -108,6 +114,7 @@ class Model {
                             (GRID_WIDTH +this.snake[0][1]+this.xDirection)%GRID_WIDTH]);
       if (this.snake[0][0] == this.appleCoords[0] && this.snake[0][1] == this.appleCoords[1]){
         this.snakeLength++;
+        this.randomlyMoveApple();
       }
       if (this.snake.length > this.snakeLength){
         this.snake.pop();
