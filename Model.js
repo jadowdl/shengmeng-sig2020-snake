@@ -14,6 +14,8 @@ class Model {
     xDirection = 1;
     yDirection = 0;
 
+    appleCoords = [];
+
     // "Derived Data"
     rows = [];
 
