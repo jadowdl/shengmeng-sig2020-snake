@@ -6,7 +6,6 @@ const m = new Model();
 
 function funct() {
   m.movesnake();
-  
   setTimeout(funct, 100);
 }
 

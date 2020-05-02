@@ -10,10 +10,10 @@ class Model {
 
     // "Source of Truth"
     snake = [];   // example: [[1,1], [2,1], [2,2]]
-
+    snakeLength = 2;
     xDirection = 1;
     yDirection = 0;
-
+    
     appleCoords = [];
 
     // "Derived Data"
@@ -90,9 +90,16 @@ class Model {
       if (this.gameOver == true){
         return;
       }
-      this.snake.pop()
+
+
       this.snake.unshift([(GRID_HEIGHT+this.snake[0][0]+this.yDirection)%GRID_HEIGHT,
-                          (GRID_WIDTH +this.snake[0][1]+this.xDirection)%GRID_WIDTH]);
+                            (GRID_WIDTH +this.snake[0][1]+this.xDirection)%GRID_WIDTH]);
+      if (this.snake[0][0] == this.appleCoords[0] && this.snake[0][1] == this.appleCoords[1]){
+        this.snakeLength++;
+      }
+      if (this.snake.length > this.snakeLength){
+        this.snake.pop();
+      }
       this.deriveRows();
       this.checkGameOver();
     }
