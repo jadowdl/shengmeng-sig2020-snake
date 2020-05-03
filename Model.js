@@ -1,5 +1,5 @@
-const GRID_WIDTH = 50;
-const GRID_HEIGHT = 50;
+const GRID_WIDTH = 20;
+const GRID_HEIGHT = 20;
 
 const EMPTY_TYPE = 0;
 const SNAKE_TYPE = 1;
@@ -65,7 +65,7 @@ class Model {
 
     }
     initializeForGameStart() {
-      this.snake = [[24, 24], [24, 25]];
+      this.snake = [[14, 14], [14, 15]];
       this.randomlyMoveApple();
       this.deriveRows();
     }

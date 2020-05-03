@@ -1,7 +1,21 @@
 const PULSE_TIME = 20; // milliseconds
 
-// const SERVER_URL = "http://10.1.192.229:3000/";
-const SERVER_URL = "./";
+import Constants from "expo-constants";
+const { manifest } = Constants;
+
+const SERVER_URL = (() => {
+  // TODO - put a "prod" api server somewhere
+
+  // Android / IOS - no CORS issue.
+  if (!!manifest.debuggerHost) {
+    return "http://"+manifest.debuggerHost.split(`:`).shift().concat(`:3000/`);
+  } 
+  // Expo Web client, making use of webpack.config.js for devServer proxy.
+  else {
+    return "./";
+  }
+})();
+
 const BOARD_SUFFIX = "board";
 const CLICK_SUFFIX = "click";
 
@@ -25,7 +39,6 @@ export default class Interface {
         fetch(SERVER_URL + BOARD_SUFFIX)
             .then(response => response.text())
             .then(data => {
-            console.log(data);
             this.game.newBoardState(data);
         });
     }
