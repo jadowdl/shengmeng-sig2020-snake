@@ -11,13 +11,15 @@ const { manifest } = Constants;
 // web we'll use webpack proxy, and otherwise just call directly to same machine, different port.
 
 const SERVER_URL = (() => {
-  // TODO - put a "prod" api server somewhere
-  if (true) {
-    return "http://ptowngames.com:3000/";
-  }
+  // TODO - detect prod env, return ptowngames.com
+
   // Android / IOS - no CORS issue.
   if (!!manifest.debuggerHost) {
-    return "http://"+manifest.debuggerHost.split(`:`).shift().concat(`:3000/`);
+    // prod - no CORS issue on android/ios.
+    if (true) {
+      return "http://ptowngames.com:3000/";
+    }
+    //return "http://"+manifest.debuggerHost.split(`:`).shift().concat(`:3000/`);
   } 
   // Expo Web client, making use of webpack.config.js for devServer proxy.
   else {
@@ -30,14 +32,17 @@ const CLICK_SUFFIX = "click";
 const RESET_SUFFIX = "reset";
 
 export default class Interface {
+    fetchCount = 0;
+
     pulse = () => {
         this.getFromServer();
-        setTimeout(this.pulse, PULSE_TIME);
+        // setTimeout(this.pulse, PULSE_TIME);
     };
 
     constructor(game) {
         this.game = game;
-        this.pulse();
+        //this.pulse();
+        setInterval(this.pulse, PULSE_TIME);
     }
 
     sendClickToServer(row, col) {
@@ -50,10 +55,18 @@ export default class Interface {
         fetch(SERVER_URL + RESET_SUFFIX); 
     }
     getFromServer() {
+        if (this.fetchCount > 20) {
+            console.log('TOO MANY board/ REQUEST QUEUED');
+            return;
+        }
+        this.fetchCount += 1;
         fetch(SERVER_URL + BOARD_SUFFIX)
-            .then(response => response.text())
-            .then(data => {
-            this.game.newBoardState(data);
-        });
+            .then(response => {
+                this.fetchCount -= 1;
+                return response.text()
+            }).then(data => {
+                this.game.newBoardState(data);
+            }
+        );
     }
 }

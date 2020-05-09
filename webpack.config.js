@@ -6,7 +6,7 @@ module.exports = async function(env, argv) {
     config.devServer.proxy = {
       '/**': {
         target: {
-          host: 'localhost',
+          host: 'ptowngames.com',
           protocol: 'http:',
           port: 3000,
         },
