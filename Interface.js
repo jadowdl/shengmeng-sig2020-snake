@@ -12,7 +12,9 @@ const { manifest } = Constants;
 
 const SERVER_URL = (() => {
   // TODO - put a "prod" api server somewhere
-
+  if (true) {
+    return "http://ptowngames.com:3000/";
+  }
   // Android / IOS - no CORS issue.
   if (!!manifest.debuggerHost) {
     return "http://"+manifest.debuggerHost.split(`:`).shift().concat(`:3000/`);
