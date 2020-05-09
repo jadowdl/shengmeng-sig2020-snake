@@ -67,7 +67,6 @@ class Model {
 
     initializeForGameStart() {
       // Empty everything out.
-      this.gameOver = false;
       this.snake = [[14, 14], [14, 15]];
       this.snakeLength = this.snake.length;
       this.xDirection = 1;

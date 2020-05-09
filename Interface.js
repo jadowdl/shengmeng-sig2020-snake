@@ -11,10 +11,6 @@ const { manifest } = Constants;
 // web we'll use webpack proxy, and otherwise just call directly to same machine, different port.
 
 const SERVER_URL = (() => {
-  // TODO - put a "prod" api server somewhere
-  if (true) {
-    return "http://ptowngames.com:3000/";
-  }
   // Android / IOS - no CORS issue.
   if (!!manifest.debuggerHost) {
     return "http://"+manifest.debuggerHost.split(`:`).shift().concat(`:3000/`);
@@ -27,7 +23,7 @@ const SERVER_URL = (() => {
 
 const BOARD_SUFFIX = "board";
 const CLICK_SUFFIX = "click";
-const RESET_SUFFIX = "reset";
+const RESET_SUFFIX = "resete";
 
 export default class Interface {
     pulse = () => {

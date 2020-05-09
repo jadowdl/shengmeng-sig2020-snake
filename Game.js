@@ -90,7 +90,7 @@ export default class Game extends React.Component {
     //    <Text style={{color:"#ff00ff"}}> Changed the text here </Text>
 
     // Finally, we return the JSX that renders the whole board
-    const gameover = this.state.board.gameOver;
+    const gameover = false;
     return (
       <View>
           <View style={{flexDirection:'row', alignItems:'center', justifyContent:'center'}}>
