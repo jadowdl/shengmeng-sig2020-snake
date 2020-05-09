@@ -1,5 +1,5 @@
 import React from 'react';
-import { Text, View } from 'react-native';
+import { Text, TouchableOpacity, View } from 'react-native';
 import { Button } from 'react-native-material-ui';
 import { Dimensions } from 'react-native'
 import {GRID_WIDTH, GRID_HEIGHT, SNAKE_TYPE, APPLE_TYPE, EMPTY_TYPE, Model } from './Model';
@@ -15,7 +15,6 @@ export default class Game extends React.Component {
   };
 
   newBoardState = (data) => {
-    console.log("nBS");
     this.setState({
         ...this.state,
         board: new Model(data)
@@ -54,8 +53,10 @@ export default class Game extends React.Component {
   render() {
     // Determine the size (in pixels) of a single Box.
     var {width, height} = Dimensions.get('window')
+    const resetButtonHeight = 50;
     width -= 50;
     height -= 50;
+    height -= resetButtonHeight;
     width = Math.min(width, height);
     height = width;
 
@@ -89,8 +90,24 @@ export default class Game extends React.Component {
     //    <Text style={{color:"#ff00ff"}}> Changed the text here </Text>
 
     // Finally, we return the JSX that renders the whole board
+    const gameover = this.state.board.gameOver;
     return (
       <View>
+          <View style={{flexDirection:'row', alignItems:'center', justifyContent:'center'}}>
+              <TouchableOpacity disabled={!gameover}
+                                style={{width:width,
+                                        height:resetButtonHeight,
+                                        justifyContent: "center",
+                                        alignItems:"center",
+                                        backgroundColor: gameover ? "#ffffff" : "#aaaaaa"}}
+              
+                                onPress={()=>{
+                                    this.state.iface.sendResetToServer();
+                                }}
+              >
+                  <Text style={{textAlign:"center", fontSize:18, width:width}}> { (gameover? "GAMEOVER - Tap to Reset" : "") + " (Snake Length " + (gameover?"was":"is")+": " + this.state.board.snakeLength +")" } </Text>
+              </TouchableOpacity>
+          </View>
         {rows}
       </View>
     );

@@ -8,23 +8,23 @@ const APPLE_TYPE = 2;
 class Model {
 
     gameOver = false;
-
-    // "Source of Truth"
     snake = [];   // example: [[1,1], [2,1], [2,2]]
     snakeLength = 2;
     xDirection = 1;
     yDirection = 0;
-
     appleCoords = [];
-
-    // "Derived Data"
-    rows = [];
+    rows = []; // "Derived Data"
 
     constructor(str) {
         if (str) {
             const parse = JSON.parse(str);
-            this.snake = parse.snake;
             this.appleCoords = parse.appleCoords;
+            this.gameOver = parse.gameOver;
+            this.snake = parse.snake;
+            this.snakeLength = parse.snakeLength;
+            this.xDirection = parse.xDirection;
+            this.yDirection = parse.yDirection;
+
             this.deriveRows();
         } else {
             this.initializeForGameStart();
@@ -64,16 +64,28 @@ class Model {
       this.appleCoords = [row,col];
 
     }
+
     initializeForGameStart() {
+      // Empty everything out.
+      this.gameOver = false;
       this.snake = [[14, 14], [14, 15]];
+      this.snakeLength = this.snake.length;
+      this.xDirection = 1;
+      this.yDirection = 0;
+
+      this.appleCoords = [];
       this.randomlyMoveApple();
+
+      // "Derive Data"
+      this.rows = [];
       this.deriveRows();
     }
 
     at(row, col) {
         return this.rows[row][col];
     }
-// row is y value of click
+
+    // row is y value of click
     handleClickAt(row, col) {
       if(this.xDirection==0){
         if(col>this.snake[0][1]){
@@ -95,13 +107,15 @@ class Model {
 
     }
 
-
-
     serialize() {
         // UNDOES THIS: this.snake = JSON.parse(str);
         return JSON.stringify({
+          appleCoords: this.appleCoords,
+          gameOver: this.gameOver,
           snake: this.snake,
-          appleCoords: this.appleCoords
+          snakeLength: this.snakeLength,
+          xDirection: this.xDirection,
+          yDirection: this.yDirection, 
         });
     }
     movesnake(){

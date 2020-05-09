@@ -25,6 +25,7 @@ const SERVER_URL = (() => {
 
 const BOARD_SUFFIX = "board";
 const CLICK_SUFFIX = "click";
+const RESET_SUFFIX = "reset";
 
 export default class Interface {
     pulse = () => {
@@ -42,6 +43,10 @@ export default class Interface {
         fetch(SERVER_URL + CLICK_SUFFIX + "?x=" + col + "&y=" + row); 
     }
 
+    sendResetToServer(row, col) {
+        // Fire and forget - wait on pulse to actually pick up the change.
+        fetch(SERVER_URL + RESET_SUFFIX); 
+    }
     getFromServer() {
         fetch(SERVER_URL + BOARD_SUFFIX)
             .then(response => response.text())

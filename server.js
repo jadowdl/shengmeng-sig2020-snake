@@ -20,6 +20,11 @@ app.get("/board", (req, resp) => {
     resp.send(m.serialize());
 });
 
+app.get("/reset", (req, resp) => {
+    m.initializeForGameStart();
+    resp.send("OK");
+});
+
 app.get("/click", (req, resp) => {
     const x = parseInt(req.query.x);
     const y = parseInt(req.query.y);
